@@ -85,20 +85,24 @@ public class ArbreFichiers {
 
     }
 
-    private ArbreFichiers getFrereGauche() {
+    public ArbreFichiers getPremierFils() {
+        return premierFils;
+    }
+
+    public ArbreFichiers getFrereGauche() {
         return frereGauche;
     }
 
-    private ArbreFichiers getFrereDroit() {
+    public ArbreFichiers getFrereDroit() {
         return frereDroit;
     }
 
-    private String getNom() {
+    public String getNom() {
         return nom;
     }
 
 
-    private ArbreFichiers getPere() {
+    public ArbreFichiers getPere() {
         return pere;
     }
 
@@ -110,7 +114,7 @@ public class ArbreFichiers {
         return contenuFichier;
     }
 
-    private int getTaille() {
+    public int getTaille() {
         return taille;
     }
 
@@ -175,4 +179,6 @@ public class ArbreFichiers {
         }
         return s;
     }
+
+
 }
