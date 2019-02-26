@@ -44,73 +44,69 @@ public class ArbreFichiers {
     }
 
     /**
-     * Methode qui ajoute un fils n2 à l'arbre et mets la taille,le fils et le freres  à jour
-     * @param n2 est le fichier, dossier ou bout d'arborescence à ajouter
-     * @throws NullPointerException si n2 est null
+     * Methode qui ajoute un fils noeudAjout à l'arbre et mets la taille,le fils et le freres  à jour
+     * @param noeudAjout est le fichier, dossier ou bout d'arborescence à ajouter
+     * @throws NullPointerException si noeudAjout est null
      */
-    public void ajouterFils(ArbreFichiers n2){ //METHODE 1
-        n2.setPere(this);
-        if (this.premierFils==null){ //si il n y a pas de fils alors n2 devient le premierFils
-            this.premierFils=n2;
+    public void ajouterFils(ArbreFichiers noeudAjout){ //METHODE 1
+        noeudAjout.pere=this;
+        if (this.premierFils==null){ //si il n y a pas de fils alors noeudAjout devient le premierFils
+            this.premierFils=noeudAjout;
         }else {
             ArbreFichiers n4=this.premierFils; //n4 est le fichier ou dossier comparé, il commence au premier et termine au dernier
             boolean rester=true;
             ArbreFichiers n3; //n3 est le frere gauche de n4 s'il existe
             while (rester){
-                if (n4.getNom().compareToIgnoreCase(n2.getNom())>0){   //Si le nom de n4 est plus grand que celui de n2 alors
-                    n3=n4.getFrereGauche(); // n3 est le frere gauche de n4
-                    if (n3!=null) // s'il n'existe pas alors on ne le met pas à jour, celle signidie que n4 est le premier fils donc n2 devient le premier fils
-                        n3.setFrereDroit(n2);
-
-                    n2.setFrereDroit(n4);
-                    n2.setFrereGauche(n3);
-                    n4.setFrereGauche(n2);
-                    //n4.setFrereGauche(n2); // le frere gauche de n4 devient n2
-                    //n2.setFrereDroit(n4); // et le frere droit de n2 devient n4
-                    //n2.setFrereGauche(n3); // le frere gauche de n2 devient n3, si n3 n'existe pas, alors
-                    if (this.premierFils==n4){ // Si n4 est le premier fils alors c'est n2 qui le devient
-                        this.premierFils=n2;
+                if (n4.nom.compareToIgnoreCase(noeudAjout.nom)>0){   //Si le nom de n4 est plus grand que celui de noeudAjout alors
+                    n3=n4.frereGauche; // n3 est le frere gauche de n4
+                    if (n3!=null) // s'il n'existe pas alors on ne le met pas à jour, celle signidie que n4 est le premier fils donc noeudAjout devient le premier fils
+                        n3.frereDroit=noeudAjout;
+                    noeudAjout.frereDroit=n4;
+                    noeudAjout.frereGauche=n3;
+                    n4.frereGauche=noeudAjout;
+                    if (this.premierFils==n4){ // Si n4 est le premier fils alors c'est noeudAjout qui le devient
+                        this.premierFils=noeudAjout;
                     }
                     rester=false; // on a fini de placer n4
                 }
-                if (rester && n4.getFrereDroit()==null){ //Si on a parcouru tous les fils et qu'on a toujours pas placés n2, alors n2 est le dernier fils
-                    n4.setFrereDroit(n2); // le frere droit de n4 est n2
-                    n2.setFrereGauche(n4); // le frere gauche de n2 est n4
-                    n2.setFrereDroit(null); // n2 n'a pas de frere droit vu qu'il est le dernier fils
+                if (rester && n4.frereDroit==null){ //Si on a parcouru tous les fils et qu'on a toujours pas placés noeudAjout, alors noeudAjout est le dernier fils
+                    n4.frereDroit=noeudAjout; // le frere droit de n4 est noeudAjout
+                    noeudAjout.frereGauche=n4; // le frere gauche de noeudAjout est n4
+                    noeudAjout.frereDroit=null; // noeudAjout n'a pas de frere droit vu qu'il est le dernier fils
                     rester=false; //on a fini de placer n4
                 }else
-                n4=n4.getFrereDroit(); // Si on n'a pas placé n2 alors n4 devient le frere de n4
+                n4=n4.frereDroit; // Si on n'a pas placé noeudAjout alors n4 devient le frere de n4
             }
         }
         ArbreFichiers a=this;
 
-        while (a.getPere()!=null){
-            a.setTaille(n2.getTaille()+a.getTaille()); //Augmentation de la taille du noeud
-            a=a.getPere();
+        while (a.pere!=null){
+            a.taille=(noeudAjout.taille+a.taille); //Augmentation de la taille du noeud
+            a=a.pere;
         }
-        a.setTaille(n2.getTaille()+a.getTaille()); //augmentation de la taille de la racine
+        a.taille=(noeudAjout.taille+a.taille); //augmentation de la taille de la racine
     }
 
     /**
      * Methode qui supprime un noeud
-     * @param n2 est le fichier ou dossier à supprimer
-     * @throws NullPointerException si n2 est null
+     * @param noeudSuppr est le fichier ou dossier à supprimer
+     * @throws NullPointerException si noeudSuppr est null
      */
-    public void supprimerFils(ArbreFichiers n2){ //methode 2 équivalent du rm
-        if (this.premierFils==n2)
-            premierFils=n2.getFrereDroit();
-        ArbreFichiers n3=n2.getFrereDroit();
-        ArbreFichiers n4 =n2.getFrereGauche();
+    public void supprimerFils(ArbreFichiers noeudSuppr){ //methode 2 équivalent du rm
+        if (this.premierFils==noeudSuppr)
+            premierFils=noeudSuppr.frereDroit;
+        ArbreFichiers n3=noeudSuppr.frereDroit;
+        ArbreFichiers n4 =noeudSuppr.frereGauche;
         if (n4!=null)
-            n4.setFrereDroit(n3);
+            n4.frereDroit=n3;
         if (n3!=null)
-            n3.setFrereGauche(n4);
-        ArbreFichiers a=n2.getPere();
-        while (a.getPere()!=null){
-            a.setTaille(a.getTaille()-n2.getTaille());
-            a=a.getPere();
+            n3.frereGauche=n4;
+        ArbreFichiers a=noeudSuppr.pere;
+        while (a.pere!=null){
+            a.taille=(a.taille-noeudSuppr.taille);
+            a=a.pere;
         }
-        a.setTaille(a.getTaille()-n2.getTaille());
+        a.taille=(a.taille-noeudSuppr.taille);
     }
 
     /**
@@ -119,17 +115,17 @@ public class ArbreFichiers {
      */
     public String infoNoeud(){ //COMMANDE ls
         String s="";
-        ArbreFichiers a=this.getPremierFils();
+        ArbreFichiers a=this.premierFils;
         if (a==null){
             return "";
         }else{
             while (a!=null){
-                if (a.isFichier())
+                if (a.fichier)
                     s+="f";
                 else
                     s+="d";
-                s+=" "+a.getNom() +" "+a.getTaille()+ "\n";
-                a=a.getFrereDroit();
+                s+=" "+a.nom +" "+a.taille+ "\n";
+                a=a.frereDroit;
             }
         }
         return s;
@@ -142,18 +138,18 @@ public class ArbreFichiers {
     public String cheminAbsolu(){ //commande pwd
         String s="";
         boolean f =true;
-        if (!this.isFichier()) {
-            s = this.getNom();
+        if (!this.fichier) {
+            s = this.nom;
             f=false;
         }
-        ArbreFichiers a =this.getPere();
+        ArbreFichiers a =this.pere;
         while (a!=null){
             if (f){
-                s=a.getNom();
+                s=a.nom;
                 f=false;
             }else
-                s=a.getNom()+"/"+s;
-            a=a.getPere();
+                s=a.nom+"/"+s;
+            a=a.pere;
         }
         if (s.equals(""))
             s="/";
@@ -172,13 +168,13 @@ public class ArbreFichiers {
             if (this.nom.equals("")){
                 throw new AccesImpossibleException("Chemin en arriere depuis la racine impossible");
             }else
-                return this.getPere();
+                return this.pere;
         }else {
-            ArbreFichiers a=this.getPremierFils();
+            ArbreFichiers a=this.premierFils;
             while (a!=null){
-                if (a.getNom().equals(s)&& !a.isFichier())
+                if (a.nom.equals(s)&& !a.fichier)
                     return a;
-                a=a.getFrereDroit();
+                a=a.frereDroit;
             }
             throw new DossierIntrouvableException("Dossier non trouvé");
         }
@@ -193,11 +189,11 @@ public class ArbreFichiers {
         if (s.equals("..")) {
             return !this.nom.equals("");
         }else {
-            ArbreFichiers a = this.getPremierFils();
+            ArbreFichiers a = this.premierFils;
             while (a != null) {
-                if (a.getNom().equals(s) && !a.isFichier())
+                if (a.nom.equals(s) && !a.fichier)
                     return true;
-                a = a.getFrereDroit();
+                a = a.frereDroit;
             }
         }
         return false ;
@@ -216,36 +212,36 @@ public class ArbreFichiers {
         }if (this.pere==null){
             s+="Pere : "+null +"\n";
         }else {
-            if (this.pere.getNom().equals(""))
+            if (this.pere.nom.equals(""))
                 s += "Pere : root \n";
             else
-                s += "Pere : " + this.pere.getNom() + " \n";
+                s += "Pere : " + this.pere.nom + " \n";
         }
         if (frereDroit==null){
             s+="Frere droit : "+null+"\n";
         }else
-            s+="Frere droit : " + this.frereDroit.getNom() +"\n";
+            s+="Frere droit : " + this.frereDroit.nom+"\n";
         if (this.frereGauche==null){
             s+="Frere gauche : " +null+"\n";
         }else
-            s+="Frere gauche : " +this.frereGauche.getNom() +"\n";
+            s+="Frere gauche : " +this.frereGauche.nom +"\n";
         s+="Taille : " + this.taille +"\n";
-        if (isFichier()){
+        if (this.fichier){
             s+="Contenu : \""+ this.contenuFichier +"\"\n";
         }else {
             if (this.premierFils==null){
                 s+="Dossier vide \n";
             }else {
-                s += "Premier fils : " + this.premierFils.getNom() + "\n";
+                s += "Premier fils : " + this.premierFils.nom+ "\n";
                 ArbreFichiers n2 = this.premierFils;
                 int numeroFils = 1;
                 s += "-----------------------------------------\n";
                 while (n2 != null) {
-                    if (n2.isFichier())
-                        s += "Fils n°" + numeroFils + " |fichier| : " + n2.getNom() + "\n";
+                    if (n2.fichier)
+                        s += "Fils n°" + numeroFils + " |fichier| : " + n2.nom + "\n";
                     else
-                        s += "Fils n°" + numeroFils + " |dossier| : " + n2.getNom() + "\n";
-                    n2 = n2.getFrereDroit();
+                        s += "Fils n°" + numeroFils + " |dossier| : " + n2.nom + "\n";
+                    n2 = n2.frereDroit;
                     numeroFils++;
                 }
                 s += "-----------------------------------------\n";
