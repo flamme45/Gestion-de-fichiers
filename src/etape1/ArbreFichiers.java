@@ -47,9 +47,13 @@ public class ArbreFichiers {
      * Methode qui ajoute un fils noeudAjout à l'arbre et mets la taille,le fils et le freres  à jour
      * @param noeudAjout est le fichier, dossier ou bout d'arborescence à ajouter
      * @throws NullPointerException si noeudAjout est null
+     * @throws CreationFilsException si on essaye d'ajouter un fils a un fichier
      */
     public void ajouterFils(ArbreFichiers noeudAjout){ //METHODE 1
         noeudAjout.pere=this;
+        if (this.fichier){
+            throw new CreationFilsException("Impossible de creer un fils dans un fichier");
+        }
         if (this.premierFils==null){ //si il n y a pas de fils alors noeudAjout devient le premierFils
             this.premierFils=noeudAjout;
         }else {
@@ -91,8 +95,21 @@ public class ArbreFichiers {
      * Methode qui supprime un noeud
      * @param noeudSuppr est le fichier ou dossier à supprimer
      * @throws NullPointerException si noeudSuppr est null
+     * @throws FilsInexistantException si noeudSuppr n'est pas un fils de l'objet appele
      */
     public void supprimerFils(ArbreFichiers noeudSuppr){ //methode 2 équivalent du rm
+        ArbreFichiers b=this.premierFils;
+        boolean bool=false;
+        while(b!=null){
+            if (b==noeudSuppr){
+                bool=true;
+                break;
+            }
+            b=b.frereDroit;
+        }
+        if (!bool){
+            throw new FilsInexistantException(noeudSuppr.nom+" n'est pas un fils de l'objet appelé ");
+        }
         if (this.premierFils==noeudSuppr)
             premierFils=noeudSuppr.frereDroit;
         ArbreFichiers n3=noeudSuppr.frereDroit;
@@ -101,6 +118,7 @@ public class ArbreFichiers {
             n4.frereDroit=n3;
         if (n3!=null)
             n3.frereGauche=n4;
+
         ArbreFichiers a=noeudSuppr.pere;
         while (a.pere!=null){
             a.taille=(a.taille-noeudSuppr.taille);

@@ -28,6 +28,7 @@ class ArbreFichiersTest {
         assert fils4.getFrereGauche() == fils2 : "Erreur frere gauche incorrect";
         assert fils4.getFrereDroit() == null : "Erreur frere droit incorrect";
         assert fils1.getPere() == racine : "Erreur pere incorrect";
+        //fils3.ajouterFils(new ArbreFichiers("aaaaaaaaa",false,null));
     }
 
 
@@ -45,6 +46,8 @@ class ArbreFichiersTest {
         fils4.ajouterFils(new ArbreFichiers("test", true, "55555"));
         fils4.ajouterFils(new ArbreFichiers("test2", true, "1"));
         racine.supprimerFils(fils4);
+        ArbreFichiers f = new ArbreFichiers("testbjbj",false,null);
+        //racine.supprimerFils(f);
         assert racine.getTaille() == fils1.getTaille() + fils2.getTaille() + fils3.getTaille() + fils4.getTaille() - fils4.getTaille() : "Erreur taille";
         assert fils1.getFrereDroit() == fils2 : "Erreur frere droit";
         assert fils2.getFrereGauche() == fils1 : "Erreur frere gauche";
