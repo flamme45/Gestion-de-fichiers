@@ -88,8 +88,10 @@ public class LecteurArbreFichier {
             lecteur.close();
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
+            System.exit(-1);
         } finally {
-            lecteur.close();
+            if (lecteur!=null)
+                lecteur.close();
         }
     }
 

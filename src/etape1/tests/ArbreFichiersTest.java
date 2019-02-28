@@ -1,6 +1,8 @@
 package etape1.tests;
 
 import etape1.ArbreFichiers;
+import etape1.exceptions.CreationFilsException;
+import etape1.exceptions.FilsInexistantException;
 import org.junit.jupiter.api.Test;
 
 
@@ -28,7 +30,13 @@ class ArbreFichiersTest {
         assert fils4.getFrereGauche() == fils2 : "Erreur frere gauche incorrect";
         assert fils4.getFrereDroit() == null : "Erreur frere droit incorrect";
         assert fils1.getPere() == racine : "Erreur pere incorrect";
-        //fils3.ajouterFils(new ArbreFichiers("aaaaaaaaa",false,null));
+        boolean erreur =false;
+        try {
+            fils3.ajouterFils(new ArbreFichiers("aaaaaaaaa", false, null));
+        }catch (CreationFilsException e){
+            erreur=true;
+        }
+        assert erreur:"Un fils a pû être créé alors que le fichier courant un un fichier";
     }
 
 
@@ -47,7 +55,13 @@ class ArbreFichiersTest {
         fils4.ajouterFils(new ArbreFichiers("test2", true, "1"));
         racine.supprimerFils(fils4);
         ArbreFichiers f = new ArbreFichiers("testbjbj",false,null);
-        //racine.supprimerFils(f);
+        boolean erreur =false;
+        try {
+            racine.supprimerFils(f);
+        }catch (FilsInexistantException e){
+            erreur=true;
+        }
+        assert erreur:"Un fils inéxistant n'a pas levé d'expcetions";
         assert racine.getTaille() == fils1.getTaille() + fils2.getTaille() + fils3.getTaille() + fils4.getTaille() - fils4.getTaille() : "Erreur taille";
         assert fils1.getFrereDroit() == fils2 : "Erreur frere droit";
         assert fils2.getFrereGauche() == fils1 : "Erreur frere gauche";

@@ -101,7 +101,7 @@ public class ArbreFichiers {
         ArbreFichiers b=this.premierFils;
         boolean bool=false;
         while(b!=null){
-            if (b==noeudSuppr){
+            if (b.equals(noeudSuppr)){
                 bool=true;
                 break;
             }
@@ -110,7 +110,7 @@ public class ArbreFichiers {
         if (!bool){
             throw new FilsInexistantException(noeudSuppr.nom+" n'est pas un fils de l'objet appelé ");
         }
-        if (this.premierFils==noeudSuppr)
+        if (this.premierFils.equals(noeudSuppr))
             premierFils=noeudSuppr.frereDroit;
         ArbreFichiers n3=noeudSuppr.frereDroit;
         ArbreFichiers n4 =noeudSuppr.frereGauche;
@@ -215,6 +215,22 @@ public class ArbreFichiers {
             }
         }
         return false ;
+    }
+
+    /**
+     * Methode qui retourne un arbrefichier en focntion du nom de celui-ci
+     * @param nom le nom du fichier ou dossier cherche
+     * @return le fichier ou dossier du nom de 'nom' et null si il n est pas trouve
+     */
+    public ArbreFichiers getArbre(String nom){
+        ArbreFichiers a=this.getPremierFils();
+        while (a!=null) {
+            if (a.nom.equals(nom)) {
+                return a;
+            }
+            a=a.getFrereDroit();
+        }
+        return null;
     }
 
     @Override
