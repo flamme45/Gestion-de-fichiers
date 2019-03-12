@@ -45,11 +45,12 @@ public class Main {
             if (sc.hasNextLine()){
                 String s=sc.nextLine();
                 String [] tab= s.split(" ");
-                if (tab[0].matches("ls|cd|mkdir|mkfile|less|pwd|rm|quit|exit")){
+                try {
                     c.setCommandeEffectuer(tab[0]);
                     dossierCourant=c.effectuerOperation(dossierCourant,tab);
-                }else
-                    c.afficherErreur(tab[0]);
+                }catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }

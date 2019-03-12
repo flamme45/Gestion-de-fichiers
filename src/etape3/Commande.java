@@ -16,9 +16,11 @@ public class Commande {
     /**
      * Methode qui modifie la commande a effectuer en fontion de ce qu on a taper
      * @param s est la commande
+     * @throws  IllegalArgumentException si s n est pas une commande valide
      */
-    public void setCommandeEffectuer(String s){
+    public void setCommandeEffectuer(String s) throws IllegalArgumentException{
         switch (s){
+
             case "ls":
                 commandeEffectuer= new CommandeLs();
                 break;
@@ -46,6 +48,8 @@ public class Commande {
             case "rm":
                 commandeEffectuer=new CommandeRm();
                 break;
+            default:
+                throw new IllegalArgumentException("Commande '" +s+"' inconnue \n");
         }
     }
 
@@ -66,11 +70,5 @@ public class Commande {
         System.out.print(">");
     }
 
-    /**
-     * Methode qui affihce une erreur si une commande est introuvable
-     * @param s est le nom de la commande introuvable
-     */
-    public void afficherErreur(String s){
-        System.out.println("Commande '" +s+"' inconnue \n");
-    }
+
 }

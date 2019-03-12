@@ -35,7 +35,7 @@ public class ArbreFichiers {
         frereDroit=null;
         frereGauche=null;
         if (fichier){
-            this.contenuFichier=contenuFichier;
+            this.contenuFichier=contenuFichier.replaceAll("___","\n");
             taille=contenuFichier.length();
         }else {
             this.contenuFichier = null;
