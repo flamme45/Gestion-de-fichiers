@@ -7,8 +7,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-            ProgrammePrincipal("toto.txt");
-    }
+        String s = "";
+        if (args.length >= 1) {
+            for (int i = 0; i < args.length - 1; i++)
+                s += args[i] + " ";
+
+            s += args[args.length - 1];
+            ProgrammePrincipal(s);
+        }else
+            ProgrammePrincipal();
+            }
 
     /**
      * Function qui lance la saisie interactive en partant d un fichier texte

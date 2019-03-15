@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class LecteurArbreFichier {
+public class LecteurArbreFichier{
     private ArbreFichiers dossierCourant;
     private int numeroLigne;
     private final String motDebut = "racine";
@@ -51,7 +51,7 @@ public class LecteurArbreFichier {
                         break; // sinon on a términé la lecture
                     }
                 } else { // s'il y a plusieurs mots
-                    if (tMots[positionNom].equals(motFin)) { // et que le deuxieme mot et le mot fin
+                    if (tMots[positionNom].equals(motFin)) { // et que le deuxieme mot est le mot fin
                         verifierEtoiles(tMots[positionEtoiles],nbetoiles-1); //on verifie qu'il y ait le bon nobmre d'étoiles
                         remonterDePere(tMots); // et on remonte d'un pere
                         if (tMots.length>2) // si la ligne contient let mot 'fin' en deuxieme mot et qu'il y a des mots derriere
@@ -105,7 +105,6 @@ public class LecteurArbreFichier {
         if (!type.equals("f")&&!type.equals("d"))
             throw new FichierCorrompuException("Le type de fichier ne peut pas être lû, il n'est ni un 'f' ni un 'd' (ligne "+numeroLigne+")");
         verifierEtoiles(etoiles,nbetoiles);
-
     }
 
     /**
