@@ -1,6 +1,7 @@
 package etape3;
 import etape1.ArbreFichiers;
-import etape2.LecteurArbreFichier;
+import etape2.ILecteurArbreFichier;
+import etape2.LecteurArbreFichierEtoiles1;
 import etape2.exceptions.FichierCorrompuException;
 import java.util.Scanner;
 
@@ -24,8 +25,8 @@ public class Main {
      */
     private static void ProgrammePrincipal(String nomFichier) {
         try {
-        LecteurArbreFichier l = new LecteurArbreFichier(nomFichier);
-            saisieInteractive(l.getRacine());
+        ILecteurArbreFichier l = new LecteurArbreFichierEtoiles1();
+        saisieInteractive(l.lireFichier(nomFichier));
         }catch (FichierCorrompuException e){
             System.out.println(e.getMessage());
         }

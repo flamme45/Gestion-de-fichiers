@@ -179,7 +179,7 @@ public class ArbreFichiers {
      * @param s est la destination souhaitee, '..' pour revenir en arriere
      * @return le noeud de la destination souhaitee
      * @throws AccesImpossibleException si on fait '..' à la racine
-     * @throws DossierIntrouvableException si le nom passe en paramètre ne correspond a aucun dossier du dossier actuel
+     * @throws DossierIntrouvableException si le nom passe en parametre ne correspond a aucun dossier du dossier actuel
      */
     public ArbreFichiers seDirigerVers(String s){
         if (s.equals("..")){

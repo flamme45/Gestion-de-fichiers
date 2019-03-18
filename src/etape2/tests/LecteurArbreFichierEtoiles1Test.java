@@ -1,21 +1,18 @@
 package etape2.tests;
 
 import etape1.ArbreFichiers;
-import etape2.LecteurArbreFichier;
+import etape2.ILecteurArbreFichier;
+import etape2.LecteurArbreFichierEtoiles1;
 import etape2.exceptions.FichierCorrompuException;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-class LecteurArbreFichierTest {
+class LecteurArbreFichierEtoiles1Test {
 
     @Test
     void getRacine() {
         try {
-            LecteurArbreFichier l = new LecteurArbreFichier("toto.txt");
-            assert l.getRacine().getNom().equals(""):"La methode ne retourne pas la racine";
+            ArbreFichiers l = new LecteurArbreFichierEtoiles1().lireFichier("toto.txt");
+            assert l.getNom().equals(""):"La methode ne retourne pas la racine";
         }catch (FichierCorrompuException e){
             System.out.println(e.getMessage());
         }
@@ -24,8 +21,7 @@ class LecteurArbreFichierTest {
     @Test
     void LecteurArbreFichierConstructeur() {
         try {
-            LecteurArbreFichier l = new LecteurArbreFichier("toto.txt");
-            ArbreFichiers racine = l.getRacine();
+            ArbreFichiers racine = new LecteurArbreFichierEtoiles1().lireFichier("toto.txt");
             ArbreFichiers sd1 = racine.getPremierFils();
             ArbreFichiers sd3= sd1.getFrereDroit();
             ArbreFichiers un_fichier = sd3.getFrereDroit();
