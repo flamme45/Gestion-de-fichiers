@@ -1,21 +1,20 @@
 package etape3;
 import etape1.ArbreFichiers;
+import etape2.ILecteurArbreFichier;
 import etape2.LecteurArbreFichier;
+import etape2.LecteurArbreFichier1;
 import etape2.exceptions.FichierCorrompuException;
 import java.util.Scanner;
 
 
 public class Main {
     public static void main(String[] args) {
-        String s = "";
-        if (args.length >= 1) {
-            for (int i = 0; i < args.length - 1; i++)
-                s += args[i] + " ";
-
-            s += args[args.length - 1];
-            ProgrammePrincipal(s);
-        }else
+        if (args.length ==1) {
+            ProgrammePrincipal(args[0]);
+        }else if (args.length==0)
             ProgrammePrincipal();
+        else
+            System.out.println("Nombre d'arguments incorrects");
             }
 
     /**
@@ -24,8 +23,8 @@ public class Main {
      */
     private static void ProgrammePrincipal(String nomFichier) {
         try {
-        LecteurArbreFichier l = new LecteurArbreFichier(nomFichier);
-            saisieInteractive(l.getRacine());
+        ILecteurArbreFichier l = new LecteurArbreFichier1();
+            saisieInteractive(l.lireFichier(nomFichier));
         }catch (FichierCorrompuException e){
             System.out.println(e.getMessage());
         }

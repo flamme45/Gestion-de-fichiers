@@ -5,19 +5,10 @@ import etape1.exceptions.*;
 /**
  * Methode qui gere les noeuds d une arborescence de fichiers et de dossiers
  */
-public class ArbreFichiers {
-    private ArbreFichiers pere ;
-    private ArbreFichiers premierFils; // File le plus a gauche Fichiers et dossier triés par ordre alphabétique
-    private ArbreFichiers frereGauche;
-    private ArbreFichiers frereDroit;
-    private String nom; //sans espace
-    private boolean fichier ; //true c'est un fichier, false c'est un dossier
-    private String contenuFichier ; //null si c'est un dossier
-    private int taille; //Pour un fichier : le nombre de caracteres dans le fichier
-                        //Pour un dossier : somme de tous les elements qu'il contient
+public class ArbreFichiers extends AbstractArbreFichiers {
 
     public ArbreFichiers(){
-        pere=null;
+        super.getPere=null;
         nom="";
         fichier=false;
         contenuFichier=null;
