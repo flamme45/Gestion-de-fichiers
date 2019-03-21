@@ -1,7 +1,7 @@
 package etape3;
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
+import etape1.ArbreFichierDossier;
 import etape2.ILecteurArbreFichier;
-import etape2.LecteurArbreFichier;
 import etape2.LecteurArbreFichier1;
 import etape2.exceptions.FichierCorrompuException;
 import java.util.Scanner;
@@ -35,7 +35,7 @@ public class Main {
      * Function qui est appelee si on ne passe pas d arguments a programmePrincipal
      */
     private static void ProgrammePrincipal(){
-        ArbreFichiers a = new ArbreFichiers();
+        AbstractArbreFichiers a = new ArbreFichierDossier();
         saisieInteractive(a);
     }
 
@@ -43,8 +43,8 @@ public class Main {
      *Fonction qui s'occupe de la saisie dans le temrinal
      * @param a est l'arborescence avec laquelle on commence
      */
-    private static void saisieInteractive(ArbreFichiers a){
-        ArbreFichiers dossierCourant =a;
+    private static void saisieInteractive(AbstractArbreFichiers a){
+        AbstractArbreFichiers dossierCourant =a;
         Commande c= new Commande();
         while (true) {
             c.afficherDemande();

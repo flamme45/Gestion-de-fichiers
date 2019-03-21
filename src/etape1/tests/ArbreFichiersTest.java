@@ -1,7 +1,8 @@
 package etape1.tests;
 
-import etape1.ArbreFichiers;
-import etape1.exceptions.CreationFilsException;
+import etape1.AbstractArbreFichiers;
+import etape1.ArbreFichierDossier;
+import etape1.ArbreFichierFichier;
 import etape1.exceptions.FilsInexistantException;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +11,11 @@ class ArbreFichiersTest {
 
     @Test
     void ajouterFils() {
-        ArbreFichiers racine = new ArbreFichiers();
-        ArbreFichiers fils1 = new ArbreFichiers("aaa", true, "contenu du fichier aaa");
-        ArbreFichiers fils2 = new ArbreFichiers("bbb", true, "contenu du fichier bbbb");
-        ArbreFichiers fils3 = new ArbreFichiers("a", true, "contenu du fichier a");
-        ArbreFichiers fils4 = new ArbreFichiers("dossier a", false, null);
+        AbstractArbreFichiers racine = new ArbreFichierDossier();
+        AbstractArbreFichiers fils1 = new ArbreFichierFichier("aaa","contenu du fichier aaa");
+        AbstractArbreFichiers fils2 = new ArbreFichierFichier("bbb", "contenu du fichier bbbb");
+        AbstractArbreFichiers fils3 = new ArbreFichierFichier("a","contenu du fichier a");
+        AbstractArbreFichiers fils4 = new ArbreFichierDossier("dossier a");
         racine.ajouterFils(fils4);
         racine.ajouterFils(fils2);
         racine.ajouterFils(fils1);
@@ -32,8 +33,8 @@ class ArbreFichiersTest {
         assert fils1.getPere() == racine : "Erreur pere incorrect";
         boolean erreur =false;
         try {
-            fils3.ajouterFils(new ArbreFichiers("aaaaaaaaa", false, null));
-        }catch (CreationFilsException e){
+            fils3.ajouterFils(new ArbreFichierDossier("aaaaaaaaa"));
+        }catch (IllegalCallerException e){
             erreur=true;
         }
         assert erreur:"Un fils a pû être créé alors que le fichier courant un un fichier";
@@ -42,19 +43,19 @@ class ArbreFichiersTest {
 
     @Test
     void supprimerFils() {
-        ArbreFichiers racine = new ArbreFichiers();
-        ArbreFichiers fils1 = new ArbreFichiers("aaa", true, "88888888");
-        ArbreFichiers fils2 = new ArbreFichiers("ee", true, "22");
-        ArbreFichiers fils3 = new ArbreFichiers("a", true, "1010101010");
-        ArbreFichiers fils4 = new ArbreFichiers("dossier aa", false, null);
+        AbstractArbreFichiers racine = new ArbreFichierDossier();
+        AbstractArbreFichiers fils1 = new ArbreFichierFichier("aaa", "88888888");
+        AbstractArbreFichiers fils2 = new ArbreFichierFichier("ee", "22");
+        AbstractArbreFichiers fils3 = new ArbreFichierFichier("a","1010101010");
+        AbstractArbreFichiers fils4 = new ArbreFichierDossier("dossier aa");
         racine.ajouterFils(fils4);
         racine.ajouterFils(fils2);
         racine.ajouterFils(fils1);
         racine.ajouterFils(fils3);
-        fils4.ajouterFils(new ArbreFichiers("test", true, "55555"));
-        fils4.ajouterFils(new ArbreFichiers("test2", true, "1"));
+        fils4.ajouterFils(new ArbreFichierFichier("test", "55555"));
+        fils4.ajouterFils(new ArbreFichierFichier("test2", "1"));
         racine.supprimerFils(fils4);
-        ArbreFichiers f = new ArbreFichiers("testbjbj",false,null);
+        AbstractArbreFichiers f = new ArbreFichierDossier("testbjbj");
         boolean erreur =false;
         try {
             racine.supprimerFils(f);
@@ -69,15 +70,22 @@ class ArbreFichiersTest {
 
     @Test
     void cheminAbsolu() {
-        ArbreFichiers racine = new ArbreFichiers();
+        AbstractArbreFichiers racine = new ArbreFichierDossier();
         assert racine.cheminAbsolu().equals("/");
-        ArbreFichiers dossier1 = new ArbreFichiers("dossier1", false, null);
+        AbstractArbreFichiers dossier1 = new ArbreFichierDossier("dossier1");
         racine.ajouterFils(dossier1);
         assert dossier1.cheminAbsolu().equals("/dossier1");
-        ArbreFichiers fichier1 = new ArbreFichiers("fichier1", true, "contenu fichier 1");
+        AbstractArbreFichiers fichier1 = new ArbreFichierFichier("fichier1", "contenu fichier 1");
         racine.ajouterFils(fichier1);
-        assert fichier1.cheminAbsolu().equals("/");
-        ArbreFichiers dossier2 = new ArbreFichiers("dossier2", false, null);
+        boolean b=false;
+        try {
+            assert fichier1.cheminAbsolu().equals("/");
+        }catch (IllegalCallerException e) {
+            b = true;
+        }
+        assert b : "Chemin absolu depuis un fichier effectué";
+
+        AbstractArbreFichiers dossier2 = new ArbreFichierDossier("dossier2");
         dossier1.ajouterFils(dossier2);
         assert dossier2.cheminAbsolu().equals("/dossier1/dossier2");
 
@@ -85,10 +93,10 @@ class ArbreFichiersTest {
 
     @Test
     void seDirigerVers() {
-        ArbreFichiers racine = new ArbreFichiers();
-        ArbreFichiers d1 = new ArbreFichiers("dossier1", false, null);
+        AbstractArbreFichiers racine = new ArbreFichierDossier();
+        AbstractArbreFichiers d1 = new ArbreFichierDossier("dossier1");
         racine.ajouterFils(d1);
-        ArbreFichiers d2 = new ArbreFichiers("dossier2", false, null);
+        AbstractArbreFichiers d2 = new ArbreFichierDossier("dossier2");
         d1.ajouterFils(d2);
         assert racine.seDirigerVers("dossier1") == d1 : "Deplacement vers le premier dossier, erreur";
         assert racine.seDirigerVers("dossier1").seDirigerVers("dossier2") == d2 : "Deplacement vers le dossier dans le dossier, erreur";
@@ -96,12 +104,12 @@ class ArbreFichiersTest {
 
     @Test
     void peutSeDirigerVers() {
-        ArbreFichiers racine = new ArbreFichiers();
-        ArbreFichiers d1 = new ArbreFichiers("doss1", false, null);
+        AbstractArbreFichiers racine = new ArbreFichierDossier();
+        AbstractArbreFichiers d1 = new ArbreFichierDossier("doss1");
         racine.ajouterFils(d1);
-        ArbreFichiers d2 = new ArbreFichiers("doss2", false, null);
+        AbstractArbreFichiers d2 = new ArbreFichierDossier("doss2");
         d1.ajouterFils(d2);
-        ArbreFichiers f1 = new ArbreFichiers("fich1", true, "contenu f1");
+        AbstractArbreFichiers f1 = new ArbreFichierFichier("fich1","contenu f1");
         racine.ajouterFils(f1);
         assert racine.peutSeDirigerVers("doss1"):"Erreur possibilite deplacement";
         assert d1.peutSeDirigerVers("doss2");

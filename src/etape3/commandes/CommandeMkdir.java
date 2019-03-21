@@ -1,14 +1,15 @@
 package etape3.commandes;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
+import etape1.ArbreFichierDossier;
 
 public class CommandeMkdir implements CommandeEffectuer {
     @Override
-    public ArbreFichiers effectuerOperation(ArbreFichiers a, String [] s){
+    public AbstractArbreFichiers effectuerOperation(AbstractArbreFichiers a, String [] s){
         if (s.length>=2)
             for (int i=1;i<s.length;i++) {
                 if (a.getArbre(s[i]) == null)
-                    a.ajouterFils(new ArbreFichiers(s[i], false, null));
+                    a.ajouterFils(new ArbreFichierDossier(s[i]));
                 else
                     System.out.println("Dossier non créé, le nom "+s[i]+" existe déjà\n");
             }

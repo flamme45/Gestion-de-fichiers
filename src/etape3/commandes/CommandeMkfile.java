@@ -1,12 +1,13 @@
 package etape3.commandes;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
+import etape1.ArbreFichierFichier;
 
 import java.util.Scanner;
 
 public class CommandeMkfile implements CommandeEffectuer {
     @Override
-    public ArbreFichiers effectuerOperation(ArbreFichiers a,String [] s){
+    public AbstractArbreFichiers effectuerOperation(AbstractArbreFichiers a, String [] s){
         if (s.length>=2) {
             for (int i=1;i<s.length;i++) {
                 if (a.getArbre(s[i]) == null) {
@@ -16,7 +17,7 @@ public class CommandeMkfile implements CommandeEffectuer {
                     if (sc.hasNextLine()) {
                         contenu = sc.nextLine();
                     }
-                    a.ajouterFils(new ArbreFichiers(s[i], true, contenu));
+                    a.ajouterFils(new ArbreFichierFichier(s[i], contenu));
 
                 } else
                     System.out.println("Dossier non créé, le nom "+s[i]+" existe déjà\n");

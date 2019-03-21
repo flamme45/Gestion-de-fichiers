@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public abstract class LecteurArbreFichier implements ILecteurArbreFichier{
     private Champs champs;
-    private ArbreFichiers dossierCourant;
+    private ArbreFichierDossier dossierCourant;
     private int numeroLigne;
     private int nbetoiles;
 
@@ -20,10 +20,10 @@ public abstract class LecteurArbreFichier implements ILecteurArbreFichier{
         this.champs=champs;
     }
 
-    public ArbreFichiers lireFichier(String nomFichier) throws  FichierCorrompuException{
+    public AbstractArbreFichiers lireFichier(String nomFichier) throws  FichierCorrompuException{
         numeroLigne=0;
-        dossierCourant = new ArbreFichiers();
-        ArbreFichiers nouvelArbre ;
+        dossierCourant = new ArbreFichierDossier();
+        AbstractArbreFichiers nouvelArbre ;
         nbetoiles=1;
         Scanner lecteur=null;
         try {
@@ -70,14 +70,14 @@ public abstract class LecteurArbreFichier implements ILecteurArbreFichier{
                         String etoiles = tMots[champs.positionEtoiles];
                         verifierLigne(type, etoiles); //On verifie que le type existe et que les etoiles sont bien des etoiles et qu'il y ait bien le bon nombre
                         if (type.equals("d")) { // si c'est un dossier
-                            nouvelArbre = new ArbreFichiers(nom, false, null); // on crée un nouveau dossier
+                            nouvelArbre = new ArbreFichierDossier(nom); // on crée un nouveau dossier
                             dossierCourant.ajouterFils(nouvelArbre);
-                            dossierCourant = nouvelArbre; // on rentre dans ce dossier
+                            dossierCourant =(ArbreFichierDossier) nouvelArbre; // on rentre dans ce dossier
                             nbetoiles++; //on augmente le nombre d'étoiles
                         } else if (lecteur.hasNextLine()) {
                             String contenu = lecteur.nextLine(); //On prend le contenu de ce fichier
                             numeroLigne++;
-                            nouvelArbre = new ArbreFichiers(nom, true, contenu); // on cree le fichier
+                            nouvelArbre = new ArbreFichierFichier(nom,contenu); // on cree le fichier
                             dossierCourant.ajouterFils(nouvelArbre);// et on l'ajoute
                         } else
                             throw new FichierCorrompuException("Le fichier ne se ferme pas correctement (ligne " + numeroLigne + ")");
@@ -142,7 +142,7 @@ public abstract class LecteurArbreFichier implements ILecteurArbreFichier{
      */
     private void remonterDePere(String [] tab ) throws FichierCorrompuException{
         if (tab[1].equals(champs.motFin) && tab[0].length() == nbetoiles - 1) {
-            this.dossierCourant = dossierCourant.getPere();
+            this.dossierCourant = (ArbreFichierDossier) dossierCourant.getPere();
             nbetoiles--;
         }else
             throw new FichierCorrompuException("Erreur dans le nombre d'étoiles dans le fichier"+"(ligne "+numeroLigne+")");
@@ -152,7 +152,7 @@ public abstract class LecteurArbreFichier implements ILecteurArbreFichier{
      * Methode qui retourne le dossier courant, qui est forcement le dossier racine quand on l appel a l exterieur de cette classe
      * @return le dossiier courant
      */
-    public ArbreFichiers getRacine(){
+    public AbstractArbreFichiers getRacine(){
         return dossierCourant;
     }
 

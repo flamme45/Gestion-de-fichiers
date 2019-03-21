@@ -2,24 +2,36 @@ package etape1;
 
 public class ArbreFichierFichier extends  AbstractArbreFichiers {
 
-    public ArbreFichierFichier(){
+    public ArbreFichierFichier() {
         throw new IllegalCallerException("Impossible de creer un fichier sans parametres");
     }
 
-    public ArbreFichierFichier(String nom, boolean fichier,String contenuFichier){
-        super(nom,true,contenuFichier.replaceAll("___","\n"));
+    public ArbreFichierFichier(String nom, String contenuFichier) {
+
+        super(nom, true, contenuFichier.replaceAll("___", "\n"), contenuFichier.length());
     }
-        this.nom =nom;
-        this.fichier=fichier;
-        pere=null;
-        premierFils=null;
-        frereDroit=null;
-        frereGauche=null;
-        if (fichier){
-            this.contenuFichier=contenuFichier.replaceAll("___","\n");
-            taille=contenuFichier.length();
-        }else {
-            this.contenuFichier = null;
-            taille = 0;
-        }
+
+    public void ajouterFils(AbstractArbreFichiers noeudAjout) {
+        throw new IllegalCallerException("Impossible d'ajouter un fils a un fichier");
+    }
+
+    public void supprimerFils(AbstractArbreFichiers noeudSuppr) {
+        throw new IllegalCallerException("Impossible de supprimer un fils d'un fichier");
+    }
+
+    public String infoNoeud() {
+        throw new IllegalCallerException("Un fichier n'est pas un noueud");
+    }
+
+    public String cheminAbsolu() {
+        throw new IllegalCallerException("Pas de chemin absolu sur un fichier");
+    }
+
+    public AbstractArbreFichiers seDirigerVers(String s) {
+        throw new IllegalCallerException("Pas possible de se diriger depuis un fichier");
+    }
+
+    public boolean peutSeDirigerVers(String s) {
+        throw new IllegalCallerException("Impossible d'essayer de se diriger depuis un fichier");
+    }
 }

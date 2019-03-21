@@ -1,10 +1,10 @@
 package etape3.commandes;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
 
 public class CommandeQuitExit implements CommandeEffectuer {
     @Override
-    public ArbreFichiers effectuerOperation(ArbreFichiers a, String [] s){
+    public AbstractArbreFichiers effectuerOperation(AbstractArbreFichiers a, String [] s){
         if (s.length==1) {
             System.exit(0);
             return null;

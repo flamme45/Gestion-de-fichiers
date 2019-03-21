@@ -1,6 +1,6 @@
 package etape2;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
 import etape2.exceptions.FichierCorrompuException;
 
 public class LecteurArbreFichier1 extends LecteurArbreFichier {
@@ -8,7 +8,7 @@ public class LecteurArbreFichier1 extends LecteurArbreFichier {
     public LecteurArbreFichier1(){
         super();
         Champs x = super.getChamps();
-        x.setMotDebut("racined");
+        x.setMotDebut("racine");
         x.setMotFin("fin");
         x.setCharCommentaire('%');
         x.setCharDebut('*');
@@ -19,7 +19,7 @@ public class LecteurArbreFichier1 extends LecteurArbreFichier {
     }
 
     @Override
-    public ArbreFichiers lireFichier(String nomFichier) throws FichierCorrompuException {
+    public AbstractArbreFichiers lireFichier(String nomFichier) throws FichierCorrompuException {
         return  super.lireFichier(nomFichier);
     }
 }

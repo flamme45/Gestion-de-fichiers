@@ -1,6 +1,6 @@
 package etape3;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
 import etape3.commandes.*;
 
 public class Commande {
@@ -59,7 +59,7 @@ public class Commande {
      * @param s est les parametes en plus
      * @return le dossier courant apres modifications
      */
-    public ArbreFichiers effectuerOperation(ArbreFichiers a,String ... s){
+    public AbstractArbreFichiers effectuerOperation(AbstractArbreFichiers a, String ... s){
         return commandeEffectuer.effectuerOperation(a,s);
     }
 
