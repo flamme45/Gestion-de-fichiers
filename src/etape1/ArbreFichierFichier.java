@@ -1,5 +1,8 @@
 package etape1;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ArbreFichierFichier extends  AbstractArbreFichiers {
 
     public ArbreFichierFichier() {
@@ -33,5 +36,17 @@ public class ArbreFichierFichier extends  AbstractArbreFichiers {
 
     public boolean peutSeDirigerVers(String s) {
         throw new IllegalCallerException("Impossible d'essayer de se diriger depuis un fichier");
+    }
+
+    public String lignesMatch(String patern){
+        Pattern cre = Pattern.compile(patern);        // Compiled RE
+        String [] lines = this.contenuFichier.split("\\r?\\n");
+        String s="";
+        for (String ligne:lines) {
+            Matcher m1=cre.matcher(ligne);
+            if (m1.find())
+                s+=ligne+"\n";
+        }
+        return s;
     }
 }

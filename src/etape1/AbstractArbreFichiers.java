@@ -35,6 +35,7 @@ public abstract class AbstractArbreFichiers {
         this.taille = taille;
     }
 
+
     public abstract void ajouterFils(AbstractArbreFichiers noeudAjout);
 
     public abstract void supprimerFils(AbstractArbreFichiers nouedSuppr);
@@ -64,6 +65,9 @@ public abstract class AbstractArbreFichiers {
         }
         return null;
     }
+
+    public abstract String lignesMatch(String s);
+
 
     public AbstractArbreFichiers getPere() {
         return pere;

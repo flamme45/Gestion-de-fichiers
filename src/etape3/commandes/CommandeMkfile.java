@@ -18,6 +18,7 @@ public class CommandeMkfile implements CommandeEffectuer {
                         contenu = sc.nextLine();
                     }
                     a.ajouterFils(new ArbreFichierFichier(s[i], contenu));
+                    System.out.println();
 
                 } else
                     System.out.println("Dossier non créé, le nom "+s[i]+" existe déjà\n");

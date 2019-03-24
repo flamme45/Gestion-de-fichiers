@@ -181,4 +181,9 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
         }
         return false ;
     }
+
+    public String lignesMatch(String s){
+        throw new IllegalCallerException("Impossible de match le contenu d'un dossier");
+    }
+
 }

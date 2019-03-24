@@ -48,6 +48,12 @@ public class Commande {
             case "rm":
                 commandeEffectuer=new CommandeRm();
                 break;
+            case "find":
+                commandeEffectuer=new CommandeFind();
+                break;
+            case "grep":
+                commandeEffectuer=new CommandeGrep();
+                break;
             default:
                 throw new IllegalArgumentException("Commande '" +s+"' inconnue \n");
         }
