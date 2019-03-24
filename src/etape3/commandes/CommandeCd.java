@@ -1,10 +1,10 @@
 package etape3.commandes;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
 
 public class CommandeCd implements CommandeEffectuer {
     @Override
-    public ArbreFichiers effectuerOperation(ArbreFichiers a, String [] s){
+    public AbstractArbreFichiers effectuerOperation(AbstractArbreFichiers a, String [] s){
         if (s.length==2) {
             if (a.peutSeDirigerVers(s[1]))
                 return a.seDirigerVers(s[1]);

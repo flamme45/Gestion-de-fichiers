@@ -1,22 +1,20 @@
 package etape3;
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
+import etape1.ArbreFichierDossier;
 import etape2.ILecteurArbreFichier;
-import etape2.LecteurArbreFichierEtoiles1;
+import etape2.LecteurArbreFichier1;
 import etape2.exceptions.FichierCorrompuException;
 import java.util.Scanner;
 
 
 public class Main {
     public static void main(String[] args) {
-        String s = "";
-        if (args.length >= 1) {
-            for (int i = 0; i < args.length - 1; i++)
-                s += args[i] + " ";
-
-            s += args[args.length - 1];
-            ProgrammePrincipal(s);
-        }else
+        if (args.length ==1) {
+            ProgrammePrincipal(args[0]);
+        }else if (args.length==0)
             ProgrammePrincipal();
+        else
+            System.out.println("Nombre d'arguments incorrects");
             }
 
     /**
@@ -25,8 +23,8 @@ public class Main {
      */
     private static void ProgrammePrincipal(String nomFichier) {
         try {
-        ILecteurArbreFichier l = new LecteurArbreFichierEtoiles1();
-        saisieInteractive(l.lireFichier(nomFichier));
+        ILecteurArbreFichier l = new LecteurArbreFichier1();
+            saisieInteractive(l.lireFichier(nomFichier));
         }catch (FichierCorrompuException e){
             System.out.println(e.getMessage());
         }
@@ -37,7 +35,7 @@ public class Main {
      * Function qui est appelee si on ne passe pas d arguments a programmePrincipal
      */
     private static void ProgrammePrincipal(){
-        ArbreFichiers a = new ArbreFichiers();
+        AbstractArbreFichiers a = new ArbreFichierDossier();
         saisieInteractive(a);
     }
 
@@ -45,8 +43,8 @@ public class Main {
      *Fonction qui s'occupe de la saisie dans le temrinal
      * @param a est l'arborescence avec laquelle on commence
      */
-    private static void saisieInteractive(ArbreFichiers a){
-        ArbreFichiers dossierCourant =a;
+    private static void saisieInteractive(AbstractArbreFichiers a){
+        AbstractArbreFichiers dossierCourant =a;
         Commande c= new Commande();
         while (true) {
             c.afficherDemande();

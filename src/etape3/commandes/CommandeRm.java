@@ -1,10 +1,10 @@
 package etape3.commandes;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
 
 public class CommandeRm implements CommandeEffectuer {
     @Override
-    public ArbreFichiers effectuerOperation(ArbreFichiers a, String [] s){
+    public AbstractArbreFichiers effectuerOperation(AbstractArbreFichiers a, String [] s){
         if (s.length==2) {
             if (a.getArbre(s[1])!=null)
                 a.supprimerFils(a.getArbre(s[1]));

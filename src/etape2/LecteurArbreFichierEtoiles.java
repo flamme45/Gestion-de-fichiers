@@ -1,101 +1,99 @@
 package etape2;
-
-import etape1.ArbreFichiers;
+import etape1.*;
 import etape2.exceptions.FichierCorrompuException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public abstract class LecteurArbreFichierEtoiles implements  ILecteurArbreFichier {
-    ArbreFichiers dossierCourant;
-    int numeroLigne;
-    String motDebut;
-    String motFin;
-    char charDebut;
-    char charCommentaire;
-    int positionEtoiles;
-    int positionNom;
-    int positionType;
-    int positionCommentaire;
-    int nbetoiles;
+public abstract class LecteurArbreFichier implements ILecteurArbreFichier{
+    private Champs champs;
+    private ArbreFichierDossier dossierCourant;
+    private int numeroLigne;
+    private int nbetoiles;
 
-    public ArbreFichiers lireFichier(String nomFichier) throws FichierCorrompuException {
-        numeroLigne = 0;
-        dossierCourant = new ArbreFichiers();
-        ArbreFichiers nouvelArbre;
-        nbetoiles = 1;
-        Scanner lecteur = null;
+    public LecteurArbreFichier(){
+        this.champs =new Champs();
+    }
+
+    public LecteurArbreFichier(Champs champs){
+        this.champs=champs;
+    }
+
+    public AbstractArbreFichiers lireFichier(String nomFichier) throws  FichierCorrompuException{
+        numeroLigne=0;
+        dossierCourant = new ArbreFichierDossier();
+        AbstractArbreFichiers nouvelArbre ;
+        nbetoiles=1;
+        Scanner lecteur=null;
         try {
             lecteur = new Scanner(new File(nomFichier));
             if (!lecteur.hasNextLine()) //S'il n'y a pas de premiere ligne
                 throw new FichierCorrompuException("Le fichier est vide");
             String ligne = lecteur.nextLine();
             numeroLigne++; //Pour afficher les messages d'erreur on calcule le numero de ligne
-            if (!ligne.equals(motDebut)) //On verifie que le fichier commence bien par le mot de debut
-                throw new FichierCorrompuException("Le fichier ne commence pas par le mot " + motDebut);
+            if (!ligne.equals(champs.motDebut)) //On verifie que le fichier commence bien par le mot de debut
+                throw new FichierCorrompuException("Le fichier ne commence pas par le mot " + champs.motDebut);
             while (lecteur.hasNextLine()) {
                 ligne = lecteur.nextLine();
                 numeroLigne++;
                 String[] tMots = ligne.split(" "); //tableau qui sépare les mots de la ligne
                 if (tMots.length == 1) { //S'il n'y a qu'un seul mot
                     if (tMots[0].equals("")) //Si le premier élement c'est une chaine vide, cela signifie que la ligne est vide
-                        throw new FichierCorrompuException("Une ligne est vide" + "(ligne " + numeroLigne + ")");
-                    if (!tMots[0].equals(motFin)) { //Si ce dernier mot n'est pas le mot fin
+                        throw new FichierCorrompuException("Une ligne est vide"+ "(ligne " + numeroLigne + ")");
+                    if (!tMots[0].equals(champs.motFin)) { //Si ce dernier mot n'est pas le mot fin
                         if (!lecteur.hasNextLine()) // et que c'estle dernier mot du fichier
-                            throw new FichierCorrompuException("Le fichier ne se termine pas par le mot '" + motFin + "'(ligne " + numeroLigne + ")");
+                            throw new FichierCorrompuException("Le fichier ne se termine pas par le mot '" + champs.motFin + "'(ligne " + numeroLigne + ")");
                         else // s'il y a un mot tout seul <=> erreur
                             throw new FichierCorrompuException("Une ligne contient un seul mot et le fichier n'a pas fini d'être lû (ligne " + numeroLigne + ")");
                     } else {//si c'est le mot 'fin'
                         if (lecteur.hasNextLine()) //s'il reste des lignes après le mot fin
-                            throw new FichierCorrompuException("Le mot '" + motFin + "' a été trouvé mais il reste des lignes dans le fichier (ligne " + numeroLigne + ")");
+                            throw new FichierCorrompuException("Le mot '"+champs.motFin+"' a été trouvé mais il reste des lignes dans le fichier (ligne " + numeroLigne + ")");
                         break; // sinon on a términé la lecture
                     }
                 } else { // s'il y a plusieurs mots
-                    if (tMots[positionNom].equals(motFin)) { // et que le deuxieme mot est le mot fin
-                        verifierEtoiles(tMots[positionEtoiles], nbetoiles - 1); //on verifie qu'il y ait le bon nobmre d'étoiles
+                    if (tMots[champs.positionNom].equals(champs.motFin)) { // et que le deuxieme mot est le mot fin
+                        verifierEtoiles(tMots[champs.positionEtoiles],nbetoiles-1); //on verifie qu'il y ait le bon nobmre d'étoiles
                         remonterDePere(tMots); // et on remonte d'un pere
-                        if (tMots.length > 2) // si la ligne contient let mot 'fin' en deuxieme mot et qu'il y a des mots derriere
-                            verifierCommentraire(tMots[positionType]); // on verifie que ce sont bien des commentaires
+                        if (tMots.length>2) // si la ligne contient let mot 'fin' en deuxieme mot et qu'il y a des mots derriere
+                            verifierCommentraire(tMots[champs.positionType]); // on verifie que ce sont bien des commentaires
                     } else { // si le deuxieme mot ce n'est pas le mot de fin
                         if (tMots.length > 3) { // et si il y a plus de 3 mots
-                            String commentaire = tMots[positionCommentaire];
+                            String commentaire = tMots[champs.positionCommentaire];
                             verifierCommentraire(commentaire); // on verifie que c'est bien un commentaire
-                        }
-                        if (tMots.length == 2) {
-                            throw new FichierCorrompuException("il n'y a que 2 mots et la ligne ne correspond pas à l'indication '" + motFin + "' (ligne " + numeroLigne + ")"); // si la taille est de deux, c'est forcement une erreur
+                        }if (tMots.length==2){
+                            throw new FichierCorrompuException("il n'y a que 2 mots et la ligne ne correspond pas à l'indication '"+champs.motFin+"' (ligne "+numeroLigne+")"); // si la taille est de deux, c'est forcement une erreur
                         }
 
-                        String nom = tMots[positionNom];
-                        String type = tMots[positionType];
-                        String etoiles = tMots[positionEtoiles];
+                        String nom = tMots[champs.positionNom];
+                        String type = tMots[champs.positionType];
+                        String etoiles = tMots[champs.positionEtoiles];
                         verifierLigne(type, etoiles); //On verifie que le type existe et que les etoiles sont bien des etoiles et qu'il y ait bien le bon nombre
                         if (type.equals("d")) { // si c'est un dossier
-                            nouvelArbre = new ArbreFichiers(nom, false, null); // on crée un nouveau dossier
+                            nouvelArbre = new ArbreFichierDossier(nom); // on crée un nouveau dossier
                             dossierCourant.ajouterFils(nouvelArbre);
-                            dossierCourant = nouvelArbre; // on rentre dans ce dossier
+                            dossierCourant =(ArbreFichierDossier) nouvelArbre; // on rentre dans ce dossier
                             nbetoiles++; //on augmente le nombre d'étoiles
                         } else if (lecteur.hasNextLine()) {
                             String contenu = lecteur.nextLine(); //On prend le contenu de ce fichier
                             numeroLigne++;
-                            nouvelArbre = new ArbreFichiers(nom, true, contenu); // on cree le fichier
+                            nouvelArbre = new ArbreFichierFichier(nom,contenu); // on cree le fichier
                             dossierCourant.ajouterFils(nouvelArbre);// et on l'ajoute
                         } else
                             throw new FichierCorrompuException("Le fichier ne se ferme pas correctement (ligne " + numeroLigne + ")");
                     }
                 }
             }
-            if (!ligne.equals(motFin)) // Si on est dans le cas ou un fichier a été ajouté en dernier et qu'il n'y ait pas le mot fin apres le contenu
-                throw new FichierCorrompuException("Le fichier ne se termine pas par le mot '" + motFin + "'");
+            if (!ligne.equals(champs.motFin)) // Si on est dans le cas ou un fichier a été ajouté en dernier et qu'il n'y ait pas le mot fin apres le contenu
+                throw new FichierCorrompuException("Le fichier ne se termine pas par le mot '"+champs.motFin+"'");
             lecteur.close();
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
             System.exit(-1);
         } finally {
-            if (lecteur != null)
+            if (lecteur!=null)
                 lecteur.close();
         }
-
         return dossierCourant;
     }
 
@@ -120,8 +118,8 @@ public abstract class LecteurArbreFichierEtoiles implements  ILecteurArbreFichie
      */
     private void verifierEtoiles(String etoiles,int nbretoiles)throws FichierCorrompuException{
         for (int i =0;i<etoiles.length();i++){
-            if (etoiles.charAt(i)!=(charDebut))
-                throw new FichierCorrompuException("Chaque ligne doit commencer par des "+charDebut+" si ce n'est pas le contenu d'un fichier (ligne "+numeroLigne+")");
+            if (etoiles.charAt(i)!=(champs.charDebut))
+                throw new FichierCorrompuException("Chaque ligne doit commencer par des "+champs.charDebut+" si ce n'est pas le contenu d'un fichier (ligne "+numeroLigne+")");
         }
         if (etoiles.length()!=nbretoiles)
             throw new FichierCorrompuException("Le nombre d'etoiles dans une ligne est incorect (ligne "+numeroLigne+")");
@@ -133,7 +131,7 @@ public abstract class LecteurArbreFichierEtoiles implements  ILecteurArbreFichie
      * @throws FichierCorrompuException si ca ne commence pas par le motif du commentaire
      */
     private void verifierCommentraire(String commentaire) throws  FichierCorrompuException{
-        if (commentaire.charAt(0)!=charCommentaire)
+        if (commentaire.charAt(0)!=champs.charCommentaire)
             throw new FichierCorrompuException("Une ligne contient plus de 4 mots  et les mots en trop ne sont pas des commentaires"+"(ligne "+numeroLigne+")");
     }
 
@@ -143,10 +141,22 @@ public abstract class LecteurArbreFichierEtoiles implements  ILecteurArbreFichie
      * @throws FichierCorrompuException si la ligne est fausse
      */
     private void remonterDePere(String [] tab ) throws FichierCorrompuException{
-        if (tab[1].equals(motFin) && tab[0].length() == nbetoiles - 1) {
-            this.dossierCourant = dossierCourant.getPere();
+        if (tab[1].equals(champs.motFin) && tab[0].length() == nbetoiles - 1) {
+            this.dossierCourant = (ArbreFichierDossier) dossierCourant.getPere();
             nbetoiles--;
         }else
             throw new FichierCorrompuException("Erreur dans le nombre d'étoiles dans le fichier"+"(ligne "+numeroLigne+")");
+    }
+
+    /**
+     * Methode qui retourne le dossier courant, qui est forcement le dossier racine quand on l appel a l exterieur de cette classe
+     * @return le dossiier courant
+     */
+    public AbstractArbreFichiers getRacine(){
+        return dossierCourant;
+    }
+
+    public Champs getChamps() {
+        return champs;
     }
 }

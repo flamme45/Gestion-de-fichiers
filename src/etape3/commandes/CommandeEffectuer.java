@@ -1,7 +1,8 @@
 package etape3.commandes;
 
-import etape1.ArbreFichiers;
+import etape1.AbstractArbreFichiers;
+
 
 public interface CommandeEffectuer {
-    ArbreFichiers effectuerOperation(ArbreFichiers a,String [] s);
+    AbstractArbreFichiers effectuerOperation(AbstractArbreFichiers a, String [] s);
 }
