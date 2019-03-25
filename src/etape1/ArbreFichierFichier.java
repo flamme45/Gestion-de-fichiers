@@ -34,6 +34,10 @@ public class ArbreFichierFichier extends  AbstractArbreFichiers {
         throw new IllegalCallerException("Pas possible de se diriger depuis un fichier");
     }
 
+    public void trouver(AbstractArbreFichiers a){
+        throw new IllegalCallerException("Pas possible de trouver les fils d'un fichier");
+    }
+
     public boolean peutSeDirigerVers(String s) {
         throw new IllegalCallerException("Impossible d'essayer de se diriger depuis un fichier");
     }
