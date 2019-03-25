@@ -186,16 +186,44 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
         throw new IllegalCallerException("Impossible de match le contenu d'un dossier");
     }
 
-    public void trouver(AbstractArbreFichiers a){
-        if (a instanceof ArbreFichierFichier)
-            System.out.println(chemin(this));
-        else {
+    public String trouver(AbstractArbreFichiers a){
+        String total="";
+        if (a instanceof ArbreFichierFichier) {
+            AbstractArbreFichiers b =a;
+            String s=b.nom;
+            b=b.pere;
+            while (!b.equals(this)){
+                s=b.nom+"/"+s;
+                b=b.pere;
+            }
+            if (s.equals(""))
+                s="/";
+            return (this.nom+"/"+s+"\n");
+
+
+        }else {
+            AbstractArbreFichiers c =a;
+            String s="";
+            while (c!=(null) && !c.equals(this)){
+                s=c.nom+"/"+s;
+                c=c.pere;
+            }
+            if (s.equals(""))
+                s="/";
+            s=this.nom+"/"+s;
+            if (s.length()>0)
+                s=s.substring(0,s.length()-1);
+            total+=s+"\n";
+
+
+
             AbstractArbreFichiers b = a.premierFils;
             while (b != null) {
-                trouver(b);
+                total+=trouver(b);
                 b = b.frereDroit;
             }
         }
+        return total;
     }
 
 

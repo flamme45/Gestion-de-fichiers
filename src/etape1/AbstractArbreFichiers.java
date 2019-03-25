@@ -109,7 +109,7 @@ public abstract class AbstractArbreFichiers {
         this.nom = nom;
     }
 
-    public abstract void trouver(AbstractArbreFichiers a);
+    public abstract String trouver(AbstractArbreFichiers a);
 
 //    public boolean isFichier() {
 //        return fichier;
