@@ -186,21 +186,24 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
         throw new IllegalCallerException("Impossible de match le contenu d'un dossier");
     }
 
+    public String trouverUnFichier(AbstractArbreFichiers a,String f){
+        String total="";
+        if (a instanceof ArbreFichierFichier && a.nom.equals(f)) {
+            return getString(a);
+        }else {
+            AbstractArbreFichiers b = a.premierFils;
+            while (b != null) {
+                total+=trouverUnFichier(b,f);
+                b = b.frereDroit;
+            }
+        }
+        return total;
+    }
+
     public String trouver(AbstractArbreFichiers a){
         String total="";
         if (a instanceof ArbreFichierFichier) {
-            AbstractArbreFichiers b =a;
-            String s=b.nom;
-            b=b.pere;
-            while (!b.equals(this)){
-                s=b.nom+"/"+s;
-                b=b.pere;
-            }
-            if (s.equals(""))
-                s="/";
-            return (this.nom+"/"+s+"\n");
-
-
+            return getString(a);
         }else {
             AbstractArbreFichiers c =a;
             String s="";
@@ -214,9 +217,6 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
             if (s.length()>0)
                 s=s.substring(0,s.length()-1);
             total+=s+"\n";
-
-
-
             AbstractArbreFichiers b = a.premierFils;
             while (b != null) {
                 total+=trouver(b);
@@ -224,6 +224,19 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
             }
         }
         return total;
+    }
+
+    private String getString(AbstractArbreFichiers a) {
+        AbstractArbreFichiers b =a;
+        String s=b.nom;
+        b=b.pere;
+        while (!b.equals(this)){
+            s=b.nom+"/"+s;
+            b=b.pere;
+        }
+        if (s.equals(""))
+            s="/";
+        return (this.nom+"/"+s+"\n");
     }
 
 

@@ -111,6 +111,8 @@ public abstract class AbstractArbreFichiers {
 
     public abstract String trouver(AbstractArbreFichiers a);
 
+    public abstract String trouverUnFichier(AbstractArbreFichiers a,String f);
+
 //    public boolean isFichier() {
 //        return fichier;
 //    }

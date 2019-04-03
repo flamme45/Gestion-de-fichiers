@@ -42,6 +42,10 @@ public class ArbreFichierFichier extends  AbstractArbreFichiers {
         throw new IllegalCallerException("Impossible d'essayer de se diriger depuis un fichier");
     }
 
+    public String trouverUnFichier(AbstractArbreFichiers a, String f){
+        throw new IllegalCallerException("Impossible de trouver un fichier depuis un dossier");
+    }
+
     public String lignesMatch(String patern){
         Pattern cre = Pattern.compile(patern);        // Compiled RE
         String [] lines = this.contenuFichier.split("\\r?\\n");
