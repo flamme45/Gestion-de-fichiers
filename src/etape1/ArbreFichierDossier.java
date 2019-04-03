@@ -240,15 +240,4 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
     }
 
 
-    public String chemin(AbstractArbreFichiers cheminpere){
-        AbstractArbreFichiers dc=this;
-        String s=this.nom;
-        while (!dc.equals(cheminpere)){
-            s=dc.nom+"/"+s;
-            dc=dc.pere;
-        }
-        return s+this.nom+"lalala\n";
-
-    }
-
 }
