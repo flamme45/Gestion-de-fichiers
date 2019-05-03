@@ -46,6 +46,11 @@ public class ArbreFichierFichier extends  AbstractArbreFichiers {
         throw new IllegalCallerException("Impossible de trouver un fichier depuis un dossier");
     }
 
+    /**
+     * Methode pour le grep
+     * @param patern est le pattern a chercher
+     * @return les lignes trouvees
+     */
     public String lignesMatch(String patern){
         Pattern cre = Pattern.compile(patern);        // Compiled RE
         String [] lines = this.contenuFichier.split("\\r?\\n");

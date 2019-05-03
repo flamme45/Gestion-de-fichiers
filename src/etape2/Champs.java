@@ -1,6 +1,8 @@
 package etape2;
 
-
+/**
+ * Class contenant le champs des lecteursArbreFichier
+ */
 public class Champs {
     String motDebut;
     String motFin;

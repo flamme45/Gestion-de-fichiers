@@ -27,10 +27,20 @@ public class CommandeGrep implements  CommandeEffectuer {
         return a;
     }
 
+    /**
+     * Verifie que la regex est bien taper
+     * @param pat est l expression reguliere
+     * @return un bool
+     */
     private boolean veriferRegex(String pat) {
         return doubleGuillements(pat)||simpleGuillements(pat);
     }
 
+    /**
+     * Verifie que ca commence et se termine par "
+     * @param pat est le string
+     * @return un bool
+     */
     private boolean doubleGuillements(String pat){
         if (pat.charAt(0)!='"'&& pat.charAt(pat.length()-1)!='"')
             return false;
@@ -46,6 +56,11 @@ public class CommandeGrep implements  CommandeEffectuer {
         return b;
     }
 
+    /**
+     * Verifie que ca commence et se termine par '
+     * @param pat est le string
+     * @return un bool
+     */
     private boolean simpleGuillements(String pat){
         if (pat.charAt(0)!='\''&& pat.charAt(pat.length()-1)!='\'')
             return false;

@@ -20,6 +20,12 @@ public abstract class LecteurArbreFichier implements ILecteurArbreFichier{
         this.champs=champs;
     }
 
+    /**
+     * Methode qui lit un fichier avec les champs decrits dans champs
+     * @param nomFichier est le nom du fichier
+     * @return l arborecence depuis la racine du fichier
+     * @throws FichierCorrompuException si il y a une erreur dans le fichier
+     */
     public AbstractArbreFichiers lireFichier(String nomFichier) throws  FichierCorrompuException{
         numeroLigne=0;
         dossierCourant = new ArbreFichierDossier();

@@ -23,9 +23,6 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
      */
     public void ajouterFils(AbstractArbreFichiers noeudAjout){ //METHODE 1
         noeudAjout.pere=this;
-//        if (this.fichier){
-//            throw new CreationFilsException("Impossible de creer un fils dans un fichier");
-//        }
         if (this.premierFils==null){ //si il n y a pas de fils alors noeudAjout devient le premierFils
             this.premierFils=noeudAjout;
         }else {
@@ -186,6 +183,12 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
         throw new IllegalCallerException("Impossible de match le contenu d'un dossier");
     }
 
+    /**
+     * Methode qui retourne le chemin depuis la racine d'un fichier f
+     * @param a est le poitn de depart de la recherche
+     * @param f est le fichier a trouver
+     * @return le string contenant le chemin vers ce fichier
+     */
     public String trouverUnFichier(AbstractArbreFichiers a,String f){
         String total="";
         if (a instanceof ArbreFichierFichier && a.nom.equals(f)) {
@@ -200,6 +203,11 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
         return total;
     }
 
+    /**
+     * Methode qui retourne le chemin de tous les fichiers et dossiers de ce dossier
+     * @param a est le point de depart de la recherche
+     * @return le string contenant tous les chemins
+     */
     public String trouver(AbstractArbreFichiers a){
         String total="";
         if (a instanceof ArbreFichierFichier) {
@@ -226,6 +234,11 @@ public class ArbreFichierDossier extends  AbstractArbreFichiers {
         return total;
     }
 
+    /**
+     * Retourne le string du fichier
+     * @param a est le point de depart
+     * @return le chemin sous forme d un string
+     */
     private String getString(AbstractArbreFichiers a) {
         AbstractArbreFichiers b =a;
         String s=b.nom;

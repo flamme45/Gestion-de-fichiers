@@ -13,6 +13,10 @@ public abstract class AbstractArbreFichiers {
     protected int taille; //Pour un fichier : le nombre de caracteres dans le fichier
     //Pour un dossier : somme de tous les elements qu'il contient
 
+    /**
+     *
+     * Constructeur qui crée la racine
+     */
     AbstractArbreFichiers() {
         this.pere = null;
         nom = "";
@@ -24,6 +28,13 @@ public abstract class AbstractArbreFichiers {
         frereGauche = null;
     }
 
+    /**
+     * Constructeur qui crée un fichier ou dossier
+     * @param nom est le nom
+     * @param fichier un bool pour savoir si c est un fichier
+     * @param contenuFichier le contentu du fichier
+     * @param taille la taille du fichier
+     */
     AbstractArbreFichiers(String nom, boolean fichier, String contenuFichier, int taille) {
         this.nom = nom;
         this.fichier = fichier;
