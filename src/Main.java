@@ -1,9 +1,10 @@
-package etape3;
 import etape1.AbstractArbreFichiers;
 import etape1.ArbreFichierDossier;
 import etape2.ILecteurArbreFichier;
 import etape2.LecteurArbreFichier1;
 import etape2.exceptions.FichierCorrompuException;
+import etape3.Commande;
+
 import java.util.Scanner;
 
 
